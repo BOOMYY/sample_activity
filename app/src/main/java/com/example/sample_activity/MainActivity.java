@@ -2,6 +2,8 @@ package com.example.sample_activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +13,33 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "ActivityLifecycle";
 
+    EditText count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        count = findViewById(R.id.count);
+
+        if (savedInstanceState != null) {
+            String username = savedInstanceState.getString("username");
+            count.setText(username);
+
+            Log.d(TAG, "Restored username: " + username);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String username = count.getText().toString();
+
+        outState.putString("username", username);
+
+        Log.d(TAG, "Saved username: " + username);
+    }
 
 //        int num1 = 10;
 //        int num2 = 5;
@@ -33,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i("MY_APP", "Application started");
 //        Log.w("MY_APP", "Check this condition");
 //        Log.e("MY_APP", "Something went wrong");
-    }
+}
 
 //    @Override
 //    protected void onStart() {
@@ -70,4 +95,4 @@ public class MainActivity extends AppCompatActivity {
 //        super.onDestroy();
 //        Log.d(TAG, "onDestroy: Activity Destroyed");
 //    }
-}
+//}
